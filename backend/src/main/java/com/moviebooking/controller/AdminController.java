@@ -1,13 +1,13 @@
 package com.moviebooking.controller;
 
-import com.moviebooking.dto.ApiResponse;
+import com.moviebooking.dto.ApiResponseDto;
 import com.moviebooking.dto.ReportResponse;
 import com.moviebooking.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.ApiResponse as SwaggerApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +31,13 @@ public class AdminController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses(value = {
-        @SwaggerApiResponse(responseCode = "200", description = "Reports generated successfully",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
-        @SwaggerApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing JWT token"),
-        @SwaggerApiResponse(responseCode = "403", description = "Forbidden - User does not have ADMIN role")
+        @ApiResponse(responseCode = "200", description = "Reports generated successfully",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponseDto.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or missing JWT token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - User does not have ADMIN role")
     })
-    public ResponseEntity<ApiResponse> generateReports() {
+    public ResponseEntity<ApiResponseDto> generateReports() {
         ReportResponse reports = reportService.generateReports();
-        return ResponseEntity.ok(ApiResponse.success("Reports generated successfully", reports));
+        return ResponseEntity.ok(ApiResponseDto.success("Reports generated successfully", reports));
     }
 }

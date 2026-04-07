@@ -1,6 +1,6 @@
 package com.moviebooking.exception;
 
-import com.moviebooking.dto.ApiResponse;
+import com.moviebooking.dto.ApiResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,31 +19,31 @@ public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
+    public ResponseEntity<ApiResponseDto> handleResourceNotFoundException(ResourceNotFoundException ex) {
         logger.error("Resource not found: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ApiResponse.error(ex.getMessage()));
+                .body(ApiResponseDto.error(ex.getMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiResponse> handleBadRequestException(BadRequestException ex) {
+    public ResponseEntity<ApiResponseDto> handleBadRequestException(BadRequestException ex) {
         logger.error("Bad request: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error(ex.getMessage()));
+                .body(ApiResponseDto.error(ex.getMessage()));
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ApiResponse> handleUnauthorizedException(UnauthorizedException ex) {
+    public ResponseEntity<ApiResponseDto> handleUnauthorizedException(UnauthorizedException ex) {
         logger.error("Unauthorized: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(ApiResponse.error(ex.getMessage()));
+                .body(ApiResponseDto.error(ex.getMessage()));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException ex) {
+    public ResponseEntity<ApiResponseDto> handleAccessDeniedException(AccessDeniedException ex) {
         logger.error("Access denied: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(ApiResponse.error("Access Denied: You don't have permission to perform this action"));
+                .body(ApiResponseDto.error("Access Denied: You don't have permission to perform this action"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -64,9 +64,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse> handleGlobalException(Exception ex) {
+    public ResponseEntity<ApiResponseDto> handleGlobalException(Exception ex) {
         logger.error("Unexpected error: {}", ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error("An unexpected error occurred. Please try again later."));
+                .body(ApiResponseDto.error("An unexpected error occurred. Please try again later."));
     }
 }
