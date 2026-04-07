@@ -1,189 +1,101 @@
 # Movie Booking Platform
 
-A complete, production-grade Movie Ticket Reservation Platform built with Spring Boot and React.
+Production-grade Movie Ticket Reservation Platform with Spring Boot & React.
 
-## 🎯 Features
-
-### Backend (Spring Boot 3)
-- ✅ JWT Authentication & Authorization
-- ✅ Role-based access control (USER, ADMIN)
-- ✅ Movie Management (Admin)
-- ✅ Showtime & Seat Management (Admin)
-- ✅ Reservation System with Transactional Locking
-- ✅ Reporting & Analytics (Admin)
-- ✅ Swagger API Documentation
-- ✅ MySQL Database with proper indexing
-
-### Frontend (React 18)
-- ✅ Modern UI with Tailwind CSS
-- ✅ User Registration & Login
-- ✅ Movie Browsing
-- ✅ Interactive Seat Booking
-- ✅ My Bookings Management
-- ✅ Admin Dashboard
-- ✅ Admin Movie & Showtime Management
-- ✅ Reports & Analytics
-
-## 🚀 Quick Start
+## 🚀 Quick Setup
 
 ### Prerequisites
-- Java 17+
-- Maven 3.6+
-- MySQL 8.0+
-- Node.js 18+
-- npm or yarn
+- Java 17+, Maven 3.6+, MySQL 8.0+, Node.js 18+
 
-### Backend Setup
+### 1. Database Setup
+```bash
+# Login to MySQL
+mysql -u root -p
 
-1. **Navigate to backend directory**
-   ```bash
-   cd backend
-   ```
+# Create database
+CREATE DATABASE movie_booking;
+exit;
+```
 
-2. **Configure MySQL**
-   - Create database: `movie_booking`
-   - Update `src/main/resources/application.properties` with your MySQL credentials
+### 2. Backend Setup
+```bash
+cd backend
 
-3. **Build and Run**
-   ```bash
-   mvn clean install
-   mvn spring-boot:run
-   ```
+# Update MySQL credentials in: src/main/resources/application.properties
+# Change: spring.datasource.username and spring.datasource.password
 
-4. **Access Backend**
-   - API: http://localhost:8080
-   - Swagger UI: http://localhost:8080/swagger-ui.html
+# Run backend
+mvn spring-boot:run
+```
+**Backend runs at:** http://localhost:8080  
+**Swagger API Docs:** http://localhost:8080/swagger-ui/index.html
 
-### Frontend Setup
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+**Frontend runs at:** http://localhost:5173
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd frontend
-   ```
+## 🔐 Login Credentials
 
-2. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+**Admin:** admin@moviebooking.com / Admin@123  
+**User:** Register new account or use seeded data
 
-3. **Start Development Server**
-   ```bash
-   npm run dev
-   ```
+## 📚 Features
 
-4. **Access Frontend**
-   - URL: http://localhost:5173
-
-## 🔐 Default Credentials
-
-### Admin Account
-- **Email**: admin@moviebooking.com
-- **Password**: Admin@123
-
-(Seeded automatically on backend startup)
+- JWT Authentication & Role-based Access (USER/ADMIN)
+- Movie & Showtime Management (Admin)
+- Interactive Seat Booking with Real-time Availability
+- Booking History & Cancellation
+- Reports & Analytics (Admin)
+- Complete Swagger API Documentation
 
 ## 📁 Project Structure
 
 ```
-.
-├── backend/          # Spring Boot Backend
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/moviebooking/
-│   │   │   │   ├── config/        # Configuration
-│   │   │   │   ├── controller/    # REST Controllers
-│   │   │   │   ├── dto/           # Data Transfer Objects
-│   │   │   │   ├── entity/        # JPA Entities
-│   │   │   │   ├── exception/     # Exception Handling
-│   │   │   │   ├── repository/    # Data Repositories
-│   │   │   │   ├── security/      # Security Config
-│   │   │   │   └── service/       # Business Logic
-│   │   │   └── resources/
-│   │   │       └── application.properties
-│   │   └── test/
-│   └── pom.xml
-│
-└── frontend/         # React Frontend
-    ├── src/
-    │   ├── api/      # API Services
-    │   ├── components/  # Reusable Components
-    │   ├── context/  # React Context
-    │   ├── pages/    # Page Components
-    │   ├── routes/   # Route Components
-    │   └── utils/    # Utilities
-    ├── package.json
-    └── vite.config.js
+backend/          # Spring Boot (Java 17)
+├── controller/   # REST APIs
+├── service/      # Business Logic
+├── repository/   # Database Access
+├── entity/       # Database Models
+├── security/     # JWT & Auth
+└── config/       # Configuration
+
+frontend/         # React 18 + Vite
+├── api/          # API Calls
+├── pages/        # UI Pages
+├── components/   # Reusable Components
+└── context/      # State Management
 ```
 
-## 🗄️ Database Schema
+## 🛠️ Tech Stack
 
-- **users** - User accounts
-- **roles** - User roles (USER, ADMIN)
-- **movies** - Movie information
-- **showtimes** - Movie showtimes
-- **seats** - Seats for each showtime
-- **reservations** - User reservations
-- **reservation_seats** - Reservation-Seat mapping
-- **user_roles** - User-Role mapping
+**Backend:** Spring Boot 3, Spring Security, JWT, MySQL, Swagger  
+**Frontend:** React 18, Vite, Tailwind CSS, Axios, React Router
 
-## 🔒 Security Features
+## 📝 API Endpoints
 
-- JWT-based authentication
-- BCrypt password encryption
-- Role-based authorization
-- Protected API endpoints
-- CORS configuration
-- Transactional seat booking (prevents double booking)
+**Auth:** `/api/auth/register`, `/api/auth/login`  
+**Movies:** `/api/movies` (GET, POST, PUT, DELETE)  
+**Showtimes:** `/api/showtimes` (GET, POST, PUT, DELETE)  
+**Seats:** `/api/seats/showtime/{id}`  
+**Reservations:** `/api/reservations` (GET, POST, PUT)  
+**Admin:** `/api/admin/reports`
 
-## 📝 API Documentation
-
-Access Swagger UI at: http://localhost:8080/swagger-ui.html
+Full API docs: http://localhost:8080/swagger-ui/index.html
 
 ## 🐳 Docker (Optional)
 
-### Backend Dockerfile
 ```bash
 cd backend
-docker build -t movie-booking-backend .
-docker run -p 8080:8080 movie-booking-backend
+docker build -t movie-booking .
+docker run -p 8080:8080 movie-booking
 ```
 
-## 🧪 Testing
+## 🔧 Troubleshooting
 
-### Backend Tests
-```bash
-cd backend
-mvn test
-```
-
-## 📦 Technologies Used
-
-### Backend
-- Java 17
-- Spring Boot 3.2.0
-- Spring Security + JWT
-- Spring Data JPA
-- MySQL
-- Lombok
-- Swagger OpenAPI
-
-### Frontend
-- React 18
-- Vite
-- React Router DOM
-- Axios
-- Tailwind CSS
-- React Hot Toast
-- Headless UI
-
-## 🎨 Features Highlight
-
-1. **Transactional Seat Booking**: Uses pessimistic locking to prevent double booking
-2. **Auto Seat Generation**: Automatically generates seats when creating showtimes
-3. **Real-time Availability**: Shows available seats in real-time
-4. **Comprehensive Reports**: Revenue, occupancy, and booking analytics
-5. **Role-Based Access**: Separate interfaces for users and admins
-
-## 📄 License
-
-This project is open source and available for educational purposes.
+**MySQL Connection Error:** Check credentials in `application.properties`  
+**Port 8080 in use:** Change `server.port` in `application.properties`  
+**Frontend API Error:** Ensure backend is running on port 8080
